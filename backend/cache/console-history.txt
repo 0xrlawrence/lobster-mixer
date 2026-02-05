@@ -1,0 +1,2 @@
+await mixer.pulse.staticCall(1);
+const mixer = await ethers.getContractAt("LobsterMixer", "0x905d74fd1a79F055d6F60A43461467DBe56288A9");

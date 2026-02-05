@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MixerInterface from '../components/MixerInterface';
+---
+
+<Layout title="Lobster Mesh Mixer">
+  <main class="min-h-screen bg-black flex items-center justify-center p-4">
+    <MixerInterface client:load />
+  </main>
+</Layout>

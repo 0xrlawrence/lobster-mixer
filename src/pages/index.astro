@@ -1,0 +1,665 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import testimonials from '../data/testimonials.json';
+import { getCollection } from 'astro:content';
+
+// Get latest blog post
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const latestPost = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())[0];
+import {
+  siWhatsapp, siTelegram, siDiscord, siSignal, siApple,
+  siAnthropic, siSpotify, siObsidian, siGithub, siGooglechrome, siGmail,
+  siX, siPhilipshue
+} from 'simple-icons';
+
+const siIcon = (icon: any) => icon.path;
+
+// Integration pills with icons
+const integrationPills = [
+  { name: 'WhatsApp', icon: siIcon(siWhatsapp), color: '#25D366' },
+  { name: 'Telegram', icon: siIcon(siTelegram), color: '#26A5E4' },
+  { name: 'Discord', icon: siIcon(siDiscord), color: '#5865F2' },
+  { name: 'Slack', icon: 'lucide:hash', color: '#E01E5A' },
+  { name: 'Signal', icon: siIcon(siSignal), color: '#3A76F0' },
+  { name: 'iMessage', icon: siIcon(siApple), color: '#007AFF' },
+  { name: 'Claude', icon: siIcon(siAnthropic), color: '#D4A574' },
+  { name: 'GPT', icon: 'lucide:bot', color: '#00A67E' },
+  { name: 'Spotify', icon: siIcon(siSpotify), color: '#1DB954' },
+  { name: 'Hue', icon: siIcon(siPhilipshue), color: '#0065D3' },
+  { name: 'Obsidian', icon: siIcon(siObsidian), color: '#7C3AED' },
+  { name: 'Twitter', icon: siIcon(siX), color: '#FFFFFF' },
+  { name: 'Browser', icon: siIcon(siGooglechrome), color: '#4285F4' },
+  { name: 'Gmail', icon: siIcon(siGmail), color: '#EA4335' },
+  { name: 'GitHub', icon: siIcon(siGithub), color: '#FFFFFF' },
+];
+
+// Split top 30 into two rows for carousel
+const half = Math.ceil(testimonials.length / 2);
+const topRow = testimonials.slice(0, half);
+const bottomRow = testimonials.slice(half);
+
+// Duplicate for seamless loop
+const row1 = [...topRow, ...topRow];
+const row2 = [...bottomRow, ...bottomRow];
+
+// Calculate animation duration based on content length for constant speed
+const pixelsPerItem = 336;
+const pixelsPerSecond = 50;
+const duration1 = (row1.length / 2 * pixelsPerItem) / pixelsPerSecond;
+const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
+---
+
+<Layout title="Lobster Mix — The AI That Does Things">
+  <div class="stars"></div>
+  <div class="nebula"></div>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="lobster-icon-container">
+        <img src="/apple-touch-icon.png" alt="Lobster Mix Logo" class="lobster-logo-animated" />
+      </div>
+
+      <h1 class="title">
+        <span class="title-main">Lobster Mix</span>
+      </h1>
+
+      <p class="tagline" id="tagline">The Private Mesh Mixer for Autonomous Agents. 🦞</p>
+      
+      <div class="hero-actions">
+        <a href="/mixer" class="btn-primary">Go to Mixer</a>
+      </div>
+
+      <div class="hero-code-block">
+        <div class="code-line cmd">
+          <span class="code-prompt">$</span>
+          <span class="os-cmd">npm install -g lobster-mix</span>
+          <button class="copy-line-btn" data-cmd="npm" title="Copy">
+             <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+             <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </header>
+
+    <!-- Latest Blog Post Removed -->
+    
+    <!-- Tutorial: AI Agents -->
+    <section class="tutorial-section">
+      <h2 class="section-title">
+        <span class="claw-accent">⟩</span> For AI Agents
+      </h2>
+      <div class="tutorial-content">
+          Lobster Mix is designed to be fully automated by autonomous agents.
+        </p>
+        
+        <div class="tutorial-steps">
+          <div class="step-card">
+             <div class="step-number">1</div>
+             <h3>Connect Wallet</h3>
+             <p>Agents can interact directly via standard Ethers.js or Viem provider.</p>
+             <div class="code-snippet">const provider = new ethers.JsonRpcProvider(RPC_URL);</div>
+          </div>
+          <div class="step-card">
+             <div class="step-number">2</div>
+             <h3>Deposit & Mix</h3>
+             <p>Call the smart contract `deposit` function programmatically.</p>
+             <div class="code-snippet">await mixer.deposit(amount, receiver, entropy);</div>
+          </div>
+          <div class="step-card">
+             <div class="step-number">3</div>
+             <h3>Listen for Events</h3>
+             <p>Monitor `MixCompleted` events to confirm transaction success.</p>
+             <div class="code-snippet">mixer.on("MixCompleted", (id) =&gt; &#123; /* ... */ &#125;);</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What It Does -->
+    <section class="features">
+      <h2 class="section-title">
+        <span class="claw-accent">⟩</span> What It Does
+      </h2>
+      <div class="features-grid">
+        <div class="feature-card">
+           <div class="feature-icon"><Icon icon="lucide:shield" color="var(--coral-bright)" size={28} /></div>
+           <h3 class="feature-title">Privacy by Default</h3>
+           <p class="feature-desc">Zero-knowledge mixing. Your transaction is hidden among hundreds of others in every wave.</p>
+        </div>
+        <div class="feature-card">
+           <div class="feature-icon"><Icon icon="lucide:network" color="var(--coral-bright)" size={28} /></div>
+           <h3 class="feature-title">Decentralized Mesh</h3>
+           <p class="feature-desc">Powered by a network of independent nodes. No central server can track or censor your activity.</p>
+        </div>
+        <div class="feature-card">
+           <div class="feature-icon"><Icon icon="lucide:layers" color="var(--coral-bright)" size={28} /></div>
+           <h3 class="feature-title">Batch Pulsing</h3>
+           <p class="feature-desc">Transactions are processed in massive batches to break timing analysis and maximize anonymity.</p>
+        </div>
+        <div class="feature-card">
+           <div class="feature-icon"><Icon icon="lucide:coins" color="var(--coral-bright)" size={28} /></div>
+           <h3 class="feature-title">Earn Rewards</h3>
+           <p class="feature-desc">Run a Lobster Node and earn native token fees for every shard you process.</p>
+        </div>
+        <div class="feature-card">
+           <div class="feature-icon"><Icon icon="lucide:zap" color="var(--coral-bright)" size={28} /></div>
+           <h3 class="feature-title">Multi-chain Agnostic</h3>
+           <p class="feature-desc">Mix assets on Polygon, Ethereum, or any EVM chain. The protocol works everywhere.</p>
+        </div>
+        <div class="feature-card">
+           <div class="feature-icon"><Icon icon="lucide:bot" color="var(--coral-bright)" size={28} /></div>
+           <h3 class="feature-title">Agent-Native</h3>
+           <p class="feature-desc">Built API-first for autonomous agents to manage funds privately without human intervention.</p>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- CTA Grid -->
+    <nav class="cta-grid" style="justify-content: center; display: flex;">
+      <a href="https://github.com/moltpodmesh/lobster-mix" class="cta cta-github" target="_blank" rel="noopener">
+        <svg class="cta-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </svg>
+        <span class="cta-label">GitHub</span>
+        <span class="cta-sub">View the source</span>
+      </a>
+    </nav>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="footer">
+      <!-- Footer content removed by request -->
+    </footer>
+  </main>
+</Layout>
+
+<script>
+  // Copy button functionality
+  const copyBtn = document.querySelector('.copy-line-btn');
+  if(copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const code = "curl -fsSL http://localhost:4321/install.sh | bash";
+      const copyIcon = copyBtn.querySelector('.copy-icon');
+      const checkIcon = copyBtn.querySelector('.check-icon');
+
+      try {
+        await navigator.clipboard.writeText(code);
+        copyBtn.classList.add('copied');
+        copyIcon.style.display = 'none';
+        checkIcon.style.display = 'block';
+        setTimeout(() => {
+           copyBtn.classList.remove('copied');
+           copyIcon.style.display = 'block';
+           checkIcon.style.display = 'none';
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
+    });
+  }
+</script>
+
+<style>
+  /* Starfield Background */
+  .stars {
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.6), transparent),
+      radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent),
+      radial-gradient(2px 2px at 200px 60px, rgba(0,229,204,0.6), transparent),
+      radial-gradient(1px 1px at 250px 150px, rgba(255,255,255,0.5), transparent),
+      radial-gradient(2px 2px at 300px 40px, rgba(255,77,77,0.4), transparent);
+    background-size: 350px 200px;
+    animation: twinkle 8s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes twinkle {
+    0% { opacity: 0.4; }
+    100% { opacity: 0.7; }
+  }
+
+  /* Nebula Gradient */
+  .nebula {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(255, 77, 77, 0.12), transparent 50%),
+      radial-gradient(ellipse 60% 60% at 80% 30%, rgba(0, 229, 204, 0.08), transparent 50%),
+      radial-gradient(ellipse 90% 70% at 50% 90%, rgba(255, 77, 77, 0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+
+  /* Hero Section */
+  .hero {
+    padding: 6rem 0 2rem;
+    text-align: center;
+  }
+  
+  .hero-actions {
+    margin-bottom: 2.5rem;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--coral-bright);
+    color: #fff;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(255, 77, 77, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 77, 77, 0.5);
+  }
+
+  .lobster-icon-container {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .lobster-logo-animated {
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+    animation: lobsterSpinTilt 2s infinite ease-in-out;
+    filter: drop-shadow(0 0 20px rgba(255, 77, 77, 0.4));
+  }
+
+  /* Refined animation per request: 
+     "spinning 5x and fast in 1 seconds animation with blur"
+     "then rest 1 sec slowly tilting and respin again"
+     Total cycle: 2s approx.
+  */
+  @keyframes lobsterSpinTilt {
+     0% { transform: rotate(0deg); filter: blur(0px); }
+     /* Fast spin phase (0-50% = 1s if duration is 2s) */
+     40% { transform: rotate(1800deg); filter: blur(4px); }
+     50% { transform: rotate(1800deg); filter: blur(0px); }
+     
+     /* Rest/Tilt phase (50-100% = 1s) */
+     65% { transform: rotate(1810deg); }
+     85% { transform: rotate(1790deg); }
+     100% { transform: rotate(1800deg); } 
+      /* Note: 1800deg is visually 0deg, so it snaps back to 0 for next loop seamlessly */
+  }
+
+  .title {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #FF4D4D 0%, #FF8533 50%, #FF4D4D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: gradientFlow 5s linear infinite;
+  }
+  
+  @keyframes gradientFlow {
+     0% { background-position: 0% 50%; }
+     100% { background-position: 200% 50%; }
+  }
+
+  .tagline {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  /* Hero Code Block */
+  .hero-code-block {
+     max-width: 450px;
+     margin: 0 auto;
+     text-align: left;
+  }
+  
+  .code-line {
+    display: flex;
+    align-items: center;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'Fira Code', monospace;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .code-prompt {
+    color: var(--coral-bright);
+    margin-right: 0.75rem;
+    user-select: none;
+  }
+  
+  .os-cmd {
+    color: #fff;
+    flex: 1;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  .copy-line-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  
+  .copy-line-btn:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .copy-icon, .check-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .hero-note {
+     font-size: 0.9rem;
+     color: var(--text-tertiary);
+     text-align: center;
+     margin-top: 0.5rem;
+  }
+  
+  /* Section Titles */
+  .section-title {
+     font-size: 2rem;
+     margin-bottom: 2rem;
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+  }
+  
+  .claw-accent {
+     color: var(--coral-bright);
+  }
+
+  /* Content Grid */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .feature-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s, background 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .feature-card:hover {
+     transform: translateY(-2px);
+     background: rgba(255,255,255,0.06);
+  }
+  
+  .feature-icon {
+    margin-bottom: 1rem;
+    color: var(--coral-bright);
+  }
+  
+  .feature-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .feature-desc {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-size: 0.95rem;
+  }
+  
+  /* Tutorial Section */
+  .tutorial-section {
+     margin: 2rem 0 6rem;
+  }
+  
+  .tutorial-content {
+     background: rgba(0,0,0,0.2);
+     border-radius: 16px;
+     padding: 2rem;
+     border: 1px solid rgba(255,255,255,0.05);
+  }
+  
+  .tutorial-intro {
+     font-size: 1.1rem;
+     color: var(--text-secondary);
+     margin-bottom: 2rem;
+  }
+  
+  .tutorial-steps {
+     display: grid;
+     gap: 2rem;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .step-card h3 {
+     margin-bottom: 0.5rem;
+     color: #fff;
+  }
+  
+  .step-number {
+     width: 30px;
+     height: 30px;
+     background: var(--coral-bright);
+     color: #000;
+     font-weight: bold;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-bottom: 1rem;
+  }
+  
+  .code-snippet {
+     background: #111;
+     padding: 0.75rem;
+     border-radius: 6px;
+     font-family: 'Fira Code', monospace;
+     font-size: 0.85rem;
+     color: #a5f3fc;
+     margin-top: 1rem;
+     border-left: 3px solid var(--coral-bright);
+  }
+
+  /* Integrations */
+  .integrations-preview {
+     margin: 6rem 0;
+     text-align: center;
+  }
+  
+  .integrations-row {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 0.75rem;
+     justify-content: center;
+     margin-bottom: 2rem;
+  }
+  
+  .integration-pill {
+     display: inline-flex;
+     align-items: center;
+     gap: 0.5rem;
+     background: rgba(255,255,255,0.05);
+     padding: 0.5rem 1rem;
+     border-radius: 20px;
+     font-size: 0.9rem;
+     color: var(--text-secondary);
+  }
+  
+  .integrations-links {
+     font-size: 0.95rem;
+  }
+  
+  .integrations-link {
+     color: var(--coral-bright);
+     text-decoration: none;
+     font-weight: 500;
+  }
+  
+  .integrations-link:hover {
+     text-decoration: underline;
+  }
+  
+  .link-separator {
+     margin: 0 0.5rem;
+     color: var(--text-tertiary);
+  }
+
+  /* Press */
+  .press-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+     gap: 1.5rem;
+  }
+  
+  .press-card {
+     background: rgba(255,255,255,0.03);
+     border: 1px solid rgba(255,255,255,0.08);
+     border-radius: 12px;
+     padding: 1.5rem;
+     text-decoration: none;
+     color: inherit;
+     display: block;
+  }
+  
+  .press-name {
+     font-weight: bold;
+     color: var(--text-secondary);
+     display: block;
+     margin-bottom: 1rem;
+     text-transform: uppercase;
+     font-size: 0.8rem;
+     letter-spacing: 1px;
+  }
+  
+  .press-quote {
+     font-size: 1.1rem;
+     font-style: italic;
+     margin-bottom: 1rem;
+     line-height: 1.4;
+  }
+  
+  .press-author {
+     font-size: 0.9rem;
+     color: var(--text-tertiary);
+  }
+
+  /* Footer */
+  .footer {
+     margin-top: 6rem;
+     text-align: center;
+     color: var(--text-tertiary);
+     font-size: 0.9rem;
+  }
+  
+  .footer-nav {
+     margin-bottom: 1rem;
+  }
+  
+  .footer-nav a {
+     color: var(--text-secondary);
+     text-decoration: none;
+  }
+  
+  .footer-nav a:hover {
+     color: var(--coral-bright);
+  }
+  
+  .footer-separator {
+     margin: 0 0.5rem;
+     opacity: 0.3;
+  }
+  
+  .footer a {
+     color: inherit;
+     text-decoration: underline;
+     text-decoration-thickness: 1px;
+     text-underline-offset: 3px;
+  }
+  
+  .cta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 4rem;
+  }
+
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+
+  .cta:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+    color: white;
+  }
+
+  .cta-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-label {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .cta-sub {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+  }
+
+  .cta-discord:hover { color: #5865F2; }
+  .cta-docs:hover { color: var(--cyan-bright); }
+  .cta-github:hover { color: #fff; }
+  .cta-skills:hover { color: var(--coral-bright); }
+</style>

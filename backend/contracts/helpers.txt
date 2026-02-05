@@ -1,0 +1,49 @@
+
+    /// @notice Select random nodes using Fisher-Yates shuffle
+    function selectRandomNodes(uint256 count, uint256 seed) internal view returns (uint256[] memory) {
+        uint256[] memory activeIndices = new uint256[](satellites.length);
+        uint256 activeCount = 0;
+        
+        // Get all active node indices
+        for (uint i = 0; i < satellites.length; i++) {
+            if (satellites[i].isActive) {
+                activeIndices[activeCount] = i;
+                activeCount++;
+            }
+        }
+        
+        require(activeCount >= count, "Not enough active nodes");
+        
+        // Fisher-Yates shuffle to select 'count' random nodes
+        uint256[] memory selected = new uint256[](count);
+        for (uint i = 0; i < count; i++) {
+            uint256 randomIndex = uint256(keccak256(abi.encodePacked(
+                block.timestamp,
+                seed,
+                i
+            ))) % (activeCount - i);
+            
+            selected[i] = activeIndices[randomIndex];
+            
+            // Swap with last unselected element
+            activeIndices[randomIndex] = activeIndices[activeCount - i - 1];
+        }
+        
+        return selected;
+    }
+
+    /// @notice Get addresses for a specific group (0-4 = A-E)
+    function getGroupAddresses(uint256 sessionId, uint256 groupIdx) internal view returns (address[] memory) {
+        MixSession storage session = sessions[sessionId];
+        uint256 nodesPerGroup = session.assignedNodeIndices.length / NUM_GROUPS;
+        address[] memory addrs = new address[](nodesPerGroup);
+        
+        uint256 startIdx = groupIdx * nodesPerGroup;
+        for (uint i = 0; i < nodesPerGroup; i++) {
+            uint256 nodeIdx = session.assignedNodeIndices[startIdx + i];
+            if (nodeIdx < satellites.length) {
+                addrs[i] = satellites[nodeIdx].addr;
+            }
+        }
+        return addrs;
+    }

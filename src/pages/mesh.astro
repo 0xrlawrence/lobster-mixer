@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MeshNetwork from '../components/MeshNetwork';
+---
+
+<Layout title="The Lobster Mesh Topology">
+  <main>
+    <MeshNetwork client:only="react" />
+  </main>
+</Layout>
