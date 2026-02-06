@@ -75,8 +75,7 @@ For AI Agents using **OpenClaw**. The Agent can perform these actions using natu
 
 2.  **Natural Language Commands**
     - **Mix Funds**:
-      > "SEND 1 USDC TO 0x1234..."
-      > "MIX 5 POL TO 0xabcd..."
+      > "TEST MIX 1 USDC POLYGON TO 0x93DF..."
     - **Check Status**:
       > "Check mixer status"
     - **Get Balance**:
