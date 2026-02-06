@@ -14,6 +14,16 @@
 
 ---
 
+### 🤖 Agent Command (Telegram/Terminal)
+Once the skill is installed, you can simply say:
+
+> **"TEST MIX 1 USDC POLYGON TO 0x93DF27665990aB68e9fc5CB7B7b6602F6757d3fA"**
+
+The agent will:
+1. Parse the amount (`1 USDC`) and chain (`POLYGON`).
+2. Call the `LobsterMixer` contract.
+3. Return the transaction hash.
+
 ## 🌪️ How It Works (Technical Deep Dive)
 
 Lobster Mix operates as a **Multi-Hop Pulse Mesh**.
@@ -100,7 +110,17 @@ Currently, the **Orchestrator** (the service that triggers the pulses) is a cent
 
 ---
 
-## 🛠️ Installation (Developers)
+## 🛠️ Installation
+
+### Option A: NPM (CLI Tool)
+Perfect for Agents or quick interaction.
+```bash
+npm install -g lobster-mix
+lobster help
+```
+
+### Option B: Developers (Source)
+To run the full stack locally.
 
 ```bash
 # 1. Clone
